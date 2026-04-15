@@ -31,13 +31,12 @@ A simple Next.js app for a college persuasive speech project. Lets classmates ta
 2. Click **Add New Project**, select your repo, click **Deploy**
 3. Wait about 60 seconds. You'll get a URL like `your-project.vercel.app`
 
-### Step 3: Add a database
+### Step 3: Add a database (Neon)
 
 1. In your Vercel project dashboard, go to the **Storage** tab
-2. Click **Create Database** → **Postgres** → **Continue**
+2. Click **Create Database** → choose **Neon** (Serverless Postgres) → **Continue**
 3. Pick a name and region, click **Create**
-4. Click **Connect** to link it to your project
-5. Vercel automatically adds the connection environment variables and redeploys
+4. Vercel automatically connects it to your project and adds the `DATABASE_URL` environment variable, then redeploys
 
 ### Step 4: Initialize the database table
 
@@ -68,5 +67,5 @@ Open [http://localhost:3000](http://localhost:3000). For local DB testing, you'l
 
 Everything used here is free for this scale:
 - Vercel Hobby plan: free
-- Vercel Postgres free tier: 256 MB storage, plenty for a class
+- Neon free tier (via Vercel marketplace): 0.5 GB storage, way more than you need for a class
 - GitHub: free
