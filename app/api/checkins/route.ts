@@ -3,6 +3,16 @@ import { getSql } from "../../../lib/db";
 
 export const dynamic = "force-dynamic";
 
+export async function GET() {
+  try {
+    const sql = getSql();
+    const rows = await sql`SELECT COUNT(*)::int AS total FROM checkins`;
+    return NextResponse.json({ total: rows[0]?.total ?? 0 });
+  } catch (err) {
+    return NextResponse.json({ total: 0 });
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();

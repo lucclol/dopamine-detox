@@ -10,6 +10,12 @@ export default function PresentPage() {
 
   useEffect(() => {
     router.prefetch("/qr");
+    router.prefetch("/");
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") router.push("/");
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [router]);
 
   function handleClick(e: React.MouseEvent) {
@@ -19,6 +25,11 @@ export default function PresentPage() {
     setClickPos({ x, y });
     setRevealing(true);
     setTimeout(() => router.push("/qr"), 1300);
+  }
+
+  function goBack(e: React.MouseEvent) {
+    e.stopPropagation();
+    router.push("/");
   }
 
   return (
@@ -126,12 +137,42 @@ export default function PresentPage() {
           position: absolute; inset: 0;
           will-change: transform, filter;
         }
+
+        /* Subtle back chevron in the top-left, only visible on hover */
+        .present-back {
+          position: absolute;
+          top: 1.25rem;
+          left: 1.5rem;
+          z-index: 10;
+          background: transparent;
+          border: none;
+          color: rgba(255,255,255,0.1);
+          font-size: 1.75rem;
+          line-height: 1;
+          cursor: pointer;
+          padding: 0.25rem 0.6rem;
+          border-radius: 6px;
+          transition: color 0.2s, background 0.2s;
+        }
+        .present-back:hover {
+          color: rgba(255,255,255,0.85);
+          background: rgba(255,255,255,0.05);
+        }
+        .revealing .present-back { opacity: 0; pointer-events: none; }
       `}</style>
       <div
         className={`stage ${revealing ? "revealing" : ""}`}
         onClick={handleClick}
         style={{ ["--x" as any]: `${clickPos.x}%`, ["--y" as any]: `${clickPos.y}%` }}
       >
+        <button
+          type="button"
+          className="present-back"
+          onClick={goBack}
+          aria-label="Back to home"
+        >
+          ←
+        </button>
         <div className="stage-inner">
           <div className="pulse" />
         </div>

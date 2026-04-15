@@ -16,6 +16,7 @@ export default function QRPage() {
 
   return (
     <div className="container">
+      <Link href="/" className="back-btn">Back</Link>
       <div className="hero">
         <h1>Scan to join</h1>
         <p className="subtitle">Point your phone camera at the code below.</p>
