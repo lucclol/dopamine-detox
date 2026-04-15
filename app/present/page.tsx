@@ -88,16 +88,17 @@ export default function PresentPage() {
           100% { width: 320vmax; height: 320vmax; opacity: 0; }
         }
 
-        /* Color wash expanding from click point */
+        /* Color wash expanding from click point — ends in black for a
+           seamless fade into the next page */
         .fill {
           position: absolute;
           inset: 0;
           background: radial-gradient(circle at var(--x) var(--y),
-            #ffffff 0%,
-            #a78bfa 12%,
-            #7c3aed 24%,
-            #1e003e 48%,
-            #000 70%);
+            #a78bfa 0%,
+            #7c3aed 8%,
+            #4c1d95 18%,
+            #1e003e 32%,
+            #000 55%);
           opacity: 0;
           transform: scale(0);
           transform-origin: var(--x) var(--y);
@@ -106,22 +107,21 @@ export default function PresentPage() {
         .revealing .fill { animation: fill 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes fill {
           0%   { transform: scale(0);   opacity: 0; }
-          10%  { opacity: 1; }
-          100% { transform: scale(4.5); opacity: 1; }
+          12%  { opacity: 1; }
+          100% { transform: scale(5);   opacity: 1; }
         }
 
-        /* Final white flash + subtle chromatic shimmer */
-        .flash {
+        /* Final smooth fade to black for a seamless handoff */
+        .fadeout {
           position: absolute;
           inset: 0;
-          background: #fff;
+          background: #000;
           opacity: 0;
           pointer-events: none;
         }
-        .revealing .flash { animation: flash 1.3s ease-in forwards; }
-        @keyframes flash {
+        .revealing .fadeout { animation: fadeout 1.3s ease-in forwards; }
+        @keyframes fadeout {
           0%, 55% { opacity: 0; }
-          80%     { opacity: 0.9; }
           100%    { opacity: 1; }
         }
 
@@ -180,7 +180,7 @@ export default function PresentPage() {
         <div className="ring ring2" />
         <div className="ring ring3" />
         <div className="fill" />
-        <div className="flash" />
+        <div className="fadeout" />
       </div>
     </>
   );
