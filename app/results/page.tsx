@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getSql } from "../../lib/db";
+import CompareSlider from "./CompareSlider";
 
 export const dynamic = "force-dynamic";
 
@@ -7,7 +8,7 @@ async function getStats() {
   try {
     const sql = getSql();
     const statsRows = await sql`
-      SELECT 
+      SELECT
         COUNT(*)::int AS total,
         AVG(focus_before)::float AS avg_focus_before,
         AVG(focus_after)::float AS avg_focus_after,
@@ -33,6 +34,7 @@ export default async function ResultsPage() {
 
   return (
     <div className="container">
+      <Link href="/" className="back-btn">Back</Link>
       <div className="hero">
         <h1>Class results</h1>
         <p className="subtitle">Live data from everyone who took the challenge.</p>
@@ -67,9 +69,14 @@ export default async function ResultsPage() {
           </div>
 
           <div className="card">
-            <h2>The numbers</h2>
-            <p>Focus: {stats.avg_focus_before.toFixed(1)} → {stats.avg_focus_after.toFixed(1)}</p>
-            <p>Mood: {stats.avg_mood_before.toFixed(1)} → {stats.avg_mood_after.toFixed(1)}</p>
+            <h2>Before vs. after</h2>
+            <p style={{ marginBottom: "1rem" }}>Drag the slider to compare.</p>
+            <CompareSlider
+              focusBefore={stats.avg_focus_before}
+              focusAfter={stats.avg_focus_after}
+              moodBefore={stats.avg_mood_before}
+              moodAfter={stats.avg_mood_after}
+            />
           </div>
 
           {reflections.length > 0 && (
