@@ -1,16 +1,35 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Home() {
+  const router = useRouter();
+
+  // Hidden presenter-mode shortcut: press "P" anywhere on the home page.
+  useEffect(() => {
+    router.prefetch("/present");
+    function onKey(e: KeyboardEvent) {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+      if (e.key === "p" || e.key === "P") router.push("/present");
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [router]);
+
   return (
     <div className="container">
-      <div className="hero">
+      <div className="hero reveal" style={{ animationDelay: "0ms" }}>
+        <div className="hero-dot" aria-hidden />
         <h1>24-Hour Stimulus Fast</h1>
         <p className="subtitle">
           A simple, science-backed reset for your focus, motivation, and mental clarity. One day. Three rules. See how different you feel.
         </p>
       </div>
 
-      <div className="card">
+      <div className="card reveal" style={{ animationDelay: "80ms" }}>
         <h2>The three rules</h2>
         <ul className="rules">
           <li>
@@ -34,7 +53,7 @@ export default function Home() {
         </ul>
       </div>
 
-      <div className="card">
+      <div className="card reveal" style={{ animationDelay: "160ms" }}>
         <h2>Things to do instead</h2>
         <ul className="suggestions">
           <li>Go for a walk without headphones</li>
@@ -48,7 +67,7 @@ export default function Home() {
         </ul>
       </div>
 
-      <div className="card">
+      <div className="card reveal" style={{ animationDelay: "240ms" }}>
         <h2>Why this works</h2>
         <p>
           Constant high-dopamine input from social media and gaming desensitizes your brain&apos;s reward system. Taking a structured break interrupts the compulsive loops and lets your baseline reset, so normal life starts feeling rewarding again.
@@ -58,15 +77,14 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="cta-row">
+      <div className="cta-row reveal" style={{ animationDelay: "320ms" }}>
         <Link href="/checkin" className="btn">Take the challenge</Link>
         <Link href="/results" className="btn btn-secondary">See class results</Link>
         <Link href="/qr" className="btn btn-secondary">Show QR code</Link>
-        <Link href="/present" className="btn btn-secondary">Presenter mode</Link>
       </div>
 
       <div className="footer">
-        Created for Communication 120 · Persuasive speech project
+        Created by Evan Cruz
       </div>
     </div>
   );
