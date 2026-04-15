@@ -41,24 +41,6 @@ export default function PresentPage() {
           overflow: hidden;
         }
 
-        /* Ambient breathing dot before click */
-        .pulse {
-          position: absolute;
-          left: 50%; top: 50%;
-          width: 8px; height: 8px;
-          border-radius: 50%;
-          background: #7c3aed;
-          transform: translate(-50%, -50%);
-          box-shadow: 0 0 60px 20px rgba(124, 58, 237, 0.35);
-          animation: breathe 3.2s ease-in-out infinite;
-          transition: opacity 0.15s;
-        }
-        @keyframes breathe {
-          0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.55; }
-          50%      { transform: translate(-50%, -50%) scale(1.9); opacity: 1; }
-        }
-        .revealing .pulse { opacity: 0; }
-
         /* Shockwave rings out of the click point */
         .ring {
           position: absolute;
@@ -125,19 +107,6 @@ export default function PresentPage() {
           100%    { opacity: 1; }
         }
 
-        /* Whole stage takes a tiny breath inward on click */
-        .revealing .stage-inner {
-          animation: inhale 0.4s ease-out forwards;
-        }
-        @keyframes inhale {
-          0%   { transform: scale(1); filter: blur(0); }
-          100% { transform: scale(1.04); filter: blur(1px); }
-        }
-        .stage-inner {
-          position: absolute; inset: 0;
-          will-change: transform, filter;
-        }
-
         /* Subtle back chevron in the top-left, only visible on hover */
         .present-back {
           position: absolute;
@@ -173,9 +142,6 @@ export default function PresentPage() {
         >
           ←
         </button>
-        <div className="stage-inner">
-          <div className="pulse" />
-        </div>
         <div className="ring ring1" />
         <div className="ring ring2" />
         <div className="ring ring3" />
